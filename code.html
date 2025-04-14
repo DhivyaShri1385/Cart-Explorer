@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Cart Explorer Login</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background: url('https://images.unsplash.com/photo-1601933470928-c7bb7ba0d161?auto=format&fit=crop&w=1740&q=80') no-repeat center center fixed;
+      background-size: cover;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .glass-box {
+      background: rgba(0, 0, 0, 0.55);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 30px 40px;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+      color: #fff;
+      width: 400px;
+      max-width: 90vw;
+      margin: auto;
+      margin-top: 8%;
+      animation: fadeIn 0.7s ease-in-out;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      color: #f1c40f;
+      text-shadow: 0 0 10px #f1c40f;
+    }
+
+    .input-group {
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .input-group label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: bold;
+      color: #ccc;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #f1c40f;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+    }
+
+    .input-group input:focus {
+      outline: none;
+      border-color: #f1c40f;
+      box-shadow: 0 0 10px #f1c40f;
+    }
+
+    .toggle-password {
+      position: absolute;
+      top: 38px;
+      right: 12px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      color: #ccc;
+      font-size: 16px;
+    }
+
+    .strength {
+      height: 5px;
+      margin-top: 5px;
+      border-radius: 5px;
+      background: #333;
+    }
+
+    .strength-bar {
+      height: 100%;
+      width: 0%;
+      border-radius: 5px;
+      transition: 0.3s;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      background: linear-gradient(45deg, #f1c40f, #f39c12);
+      color: white;
+      font-weight: bold;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: linear-gradient(45deg, #f39c12, #f1c40f);
+    }
+
+    .dashboard {
+      display: none;
+      flex-direction: column;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(5px);
+      animation: fadeIn 0.6s ease-in-out;
+    }
+
+    .dashboard-header {
+      padding: 15px 25px;
+      color: #f1c40f;
+      font-size: 24px;
+      text-shadow: 0 0 10px #f1c40f;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    iframe {
+      flex: 1;
+      width: 100%;
+      border: none;
+      box-shadow: 0 0 20px #f1c40f;
+    }
+
+    .logout-btn {
+      padding: 12px 30px;
+      margin: 10px auto 20px auto;
+      border: none;
+      border-radius: 12px;
+      background-color: #ff4d4d;
+      color: #fff;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+
+    .logout-btn:hover {
+      background-color: #ff1a1a;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+  <!-- Login Page -->
+  <div class="glass-box" id="loginBox">
+    <h2>🔐 Welcome</h2>
+    <div class="input-group">
+      <label for="username">Username</label>
+      <input type="text" id="username" placeholder="Enter username" required>
+    </div>
+    <div class="input-group">
+      <label for="password">Password</label>
+      <input type="password" id="password" placeholder="Enter password" required>
+      <button type="button" class="toggle-password" onclick="togglePassword()">👁️</button>
+      <div class="strength"><div class="strength-bar" id="strengthBar"></div></div>
+    </div>
+    <button onclick="login()">Login</button>
+  </div>
+
+  <!-- Dashboard Page -->
+  <div class="dashboard" id="dashboardBox">
+    <div class="dashboard-header">📊 Welcome to the Dashboard</div>
+    <iframe src="https://us1.ca.analytics.ibm.com/bi/?perspective=dashboard&pathRef=.my_folders%2FNew%2Bdashboard111&closeWindowOnLastView=true&ui_appbar=false&ui_navbar=false&shareMode=embedded&action=view&mode=dashboard&subView=model00000195a866de93_00000008" allowfullscreen></iframe>
+    <button class="logout-btn" onclick="logout()">Logout</button>
+  </div>
+
+  <script>
+    function togglePassword() {
+      const pwd = document.getElementById("password");
+      pwd.type = pwd.type === "password" ? "text" : "password";
+    }
+
+    document.getElementById("password").addEventListener("input", function () {
+      const val = this.value;
+      const bar = document.getElementById("strengthBar");
+      let strength = 0;
+      if (val.length > 5) strength += 25;
+      if (/[A-Z]/.test(val)) strength += 25;
+      if (/[0-9]/.test(val)) strength += 25;
+      if (/[\W]/.test(val)) strength += 25;
+      bar.style.width = strength + "%";
+      bar.style.background = strength < 50 ? "red" : strength < 75 ? "orange" : "limegreen";
+    });
+
+    function login() {
+      const user = document.getElementById("username").value.trim();
+      const pass = document.getElementById("password").value;
+      if (user === "" || pass === "") {
+        alert("Please fill in both fields!");
+        return;
+      }
+      document.getElementById("loginBox").style.display = "none";
+      document.getElementById("dashboardBox").style.display = "flex";
+    }
+
+    function logout() {
+      document.getElementById("dashboardBox").style.display = "none";
+      document.getElementById("loginBox").style.display = "block";
+      document.getElementById("username").value = "";
+      document.getElementById("password").value = "";
+      document.getElementById("strengthBar").style.width = "0%";
+    }
+  </script>
+</body>
+</html>
