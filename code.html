@@ -1,221 +1,178 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Cart Explorer Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cart Explorer Portal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
-
-    body {
-      background: url('https://images.unsplash.com/photo-1601933470928-c7bb7ba0d161?auto=format&fit=crop&w=1740&q=80') no-repeat center center fixed;
-      background-size: cover;
-      height: 100vh;
-      overflow: hidden;
-    }
-
-    .glass-box {
-      background: rgba(0, 0, 0, 0.55);
-      backdrop-filter: blur(10px);
-      border-radius: 20px;
-      padding: 30px 40px;
-      box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
-      color: #fff;
-      width: 400px;
-      max-width: 90vw;
-      margin: auto;
-      margin-top: 8%;
-      animation: fadeIn 0.7s ease-in-out;
-    }
-
-    h2 {
-      text-align: center;
-      margin-bottom: 25px;
-      color: #f1c40f;
-      text-shadow: 0 0 10px #f1c40f;
-    }
-
-    .input-group {
-      margin-bottom: 20px;
-      position: relative;
-    }
-
-    .input-group label {
-      display: block;
-      margin-bottom: 6px;
-      font-weight: bold;
-      color: #ccc;
-    }
-
-    .input-group input {
-      width: 100%;
-      padding: 12px;
-      border: 1px solid #f1c40f;
-      border-radius: 10px;
-      background: rgba(255, 255, 255, 0.1);
-      color: #fff;
-    }
-
-    .input-group input:focus {
-      outline: none;
-      border-color: #f1c40f;
-      box-shadow: 0 0 10px #f1c40f;
-    }
-
-    .toggle-password {
-      position: absolute;
-      top: 38px;
-      right: 12px;
-      cursor: pointer;
-      background: none;
-      border: none;
-      color: #ccc;
-      font-size: 16px;
-    }
-
-    .strength {
-      height: 5px;
-      margin-top: 5px;
-      border-radius: 5px;
-      background: #333;
-    }
-
-    .strength-bar {
-      height: 100%;
-      width: 0%;
-      border-radius: 5px;
-      transition: 0.3s;
-    }
-
-    button {
-      width: 100%;
-      padding: 12px;
-      margin-top: 10px;
-      background: linear-gradient(45deg, #f1c40f, #f39c12);
-      color: white;
-      font-weight: bold;
-      border: none;
-      border-radius: 12px;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
-
-    button:hover {
-      background: linear-gradient(45deg, #f39c12, #f1c40f);
-    }
-
-    .dashboard {
-      display: none;
-      flex-direction: column;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(0, 0, 0, 0.6);
-      backdrop-filter: blur(5px);
-      animation: fadeIn 0.6s ease-in-out;
-    }
-
-    .dashboard-header {
-      padding: 15px 25px;
-      color: #f1c40f;
-      font-size: 24px;
-      text-shadow: 0 0 10px #f1c40f;
-      font-weight: bold;
-      text-align: center;
-    }
-
-    iframe {
-      flex: 1;
-      width: 100%;
-      border: none;
-      box-shadow: 0 0 20px #f1c40f;
-    }
-
-    .logout-btn {
-      padding: 12px 30px;
-      margin: 10px auto 20px auto;
-      border: none;
-      border-radius: 12px;
-      background-color: #ff4d4d;
-      color: #fff;
-      cursor: pointer;
-      font-weight: bold;
-      transition: background 0.3s;
-    }
-
-    .logout-btn:hover {
-      background-color: #ff1a1a;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: scale(0.95); }
-      to { opacity: 1; transform: scale(1); }
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+    body { min-height: 100vh; background: linear-gradient(to right, #e0eafc, #cfdef3); display: flex; flex-direction: column; align-items: center; }
+    nav { width: 100%; background: #004080; padding: 1rem; display: flex; justify-content: center; gap: 2rem; }
+    nav button { background: transparent; border: 2px solid #fff; color: #fff; padding: 0.5rem 1rem; border-radius: 10px; font-size: 1rem; cursor: pointer; transition: 0.3s; }
+    nav button:hover { background: #fff; color: #004080; }
+    .container { background: #fff; margin-top: 2rem; padding: 2rem; border-radius: 15px; width: 700px; box-shadow: 0px 0px 15px rgba(0,0,0,0.2); display: none; }
+    .container.active { display: block; animation: fadeIn 0.5s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    h1, h2 { text-align: center; color: #004080; margin-bottom: 1rem; }
+    input, select { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ccc; border-radius: 10px; font-size: 1rem; }
+    button.main-btn { width: 100%; padding: 12px; background: #004080; color: #fff; border: none; border-radius: 10px; font-size: 1rem; margin-top: 1rem; cursor: pointer; transition: background 0.3s; }
+    button.main-btn:hover { background: #0066cc; }
+    .card { background: #f9f9f9; padding: 1rem; border-radius: 10px; margin: 1rem 0; box-shadow: 0px 0px 10px rgba(0,0,0,0.1); position: relative; overflow: hidden; }
+    iframe { width: 100%; height: 300px; border: none; border-radius: 10px; margin-top: 1rem; }
+    ul { padding-left: 1.2rem; margin-top: 0.5rem; }
+    ul li { margin: 0.5rem 0; }
+    strong { color: #004080; }
   </style>
 </head>
 <body>
-  <!-- Login Page -->
-  <div class="glass-box" id="loginBox">
-    <h2>🔐 Welcome</h2>
-    <div class="input-group">
-      <label for="username">Username</label>
-      <input type="text" id="username" placeholder="Enter username" required>
-    </div>
-    <div class="input-group">
-      <label for="password">Password</label>
-      <input type="password" id="password" placeholder="Enter password" required>
-      <button type="button" class="toggle-password" onclick="togglePassword()">👁️</button>
-      <div class="strength"><div class="strength-bar" id="strengthBar"></div></div>
-    </div>
-    <button onclick="login()">Login</button>
+
+<nav>
+  <button onclick="showPage('homePage')">Home</button>
+  <button onclick="showPage('aboutPage')">About</button>
+  <button onclick="showPage('loginPage')">Login</button>
+</nav>
+
+<div id="homePage" class="container active">
+  <h1>Welcome to <strong>Cart Explorer!</strong></h1>
+  <div class="card">
+    <h2>What is Cart Explorer?</h2>
+    <p>Cart Explorer is an advanced analytics platform designed for e-commerce businesses to maximize sales and improve customer engagement.</p>
+    <p>Powered by <strong>IBM Cognos Analytics</strong>, Cart Explorer tracks buyer behavior, identifies abandoned carts, evaluates promotional effectiveness, and provides real-time, actionable insights through interactive dashboards.</p>
+    <h2>✅ With Cart Explorer, businesses can:</h2>
+    <ul>
+      <li><strong>Understand customer behavior</strong></li>
+      <li><strong>Identify drop-off points</strong></li>
+      <li><strong>Recover lost sales</strong></li>
+      <li><strong>Boost conversion rates</strong></li>
+      <li><strong>Make smarter, data-driven decisions</strong></li>
+    </ul>
+    <h2><strong>Cart Explorer — Turning data into business growth!</strong></h2>
   </div>
+</div>
 
-  <!-- Dashboard Page -->
-  <div class="dashboard" id="dashboardBox">
-    <div class="dashboard-header">📊 Welcome to the Dashboard</div>
-    <iframe src="https://us1.ca.analytics.ibm.com/bi/?perspective=dashboard&pathRef=.my_folders%2FNew%2Bdashboard111&closeWindowOnLastView=true&ui_appbar=false&ui_navbar=false&shareMode=embedded&action=view&mode=dashboard&subView=model00000195a866de93_00000008" allowfullscreen></iframe>
-    <button class="logout-btn" onclick="logout()">Logout</button>
+<div id="aboutPage" class="container">
+  <h1>About Us</h1>
+  <div class="card">
+    <h2>Our Mission</h2>
+    <p>Our mission is to help businesses unlock the power of their e-commerce data, reduce cart abandonment, and improve sales through real-time, AI-driven dashboards and actionable insights.</p>
+    <h3 style="text-align:center; margin-top: 1rem; color: #0066cc;">"Turning Cart Abandonment into Business Growth"</h3>
   </div>
+  <div class="card">
+    <h2>Team Members</h2>
+    <ul>
+      <li>927623BAD044 – Janaki J</li>
+      <li>927623BAD026 – Dharunya R</li>
+      <li>927623BAD028 – Dhivya Shri S</li>
+    </ul>
+  </div>
+</div>
 
-  <script>
-    function togglePassword() {
-      const pwd = document.getElementById("password");
-      pwd.type = pwd.type === "password" ? "text" : "password";
+<div id="loginPage" class="container">
+  <h1>Login Portal</h1>
+  <input type="text" id="username" placeholder="Enter Username">
+  <input type="password" id="password" placeholder="Enter Password">
+  <select id="role">
+    <option value="user">User</option>
+    <option value="admin">Admin</option>
+  </select>
+  <button class="main-btn" onclick="login()">Login</button>
+</div>
+
+<div id="userDashboard" class="container">
+  <h1>User Dashboard</h1>
+  <button class="main-btn" onclick="showPage('viewDashboard')">View Dashboard</button>
+  <button class="main-btn" onclick="showPage('editPage')">Edit Details</button>
+  <button class="main-btn" onclick="showPage('reportAnalysis')">Report Analysis</button>
+  <button class="main-btn" onclick="logout()">Logout</button>
+</div>
+
+<div id="adminDashboard" class="container">
+  <h1>Admin Dashboard</h1>
+  <button class="main-btn" onclick="showPage('viewDashboard')">View Dashboard</button>
+  <button class="main-btn" onclick="showPage('reportAnalysis')">Report Analysis</button>
+  <button class="main-btn" onclick="logout()">Logout</button>
+</div>
+
+<div id="viewDashboard" class="container">
+  <h1>Dashboard View</h1>
+  <iframe src="https://us1.ca.analytics.ibm.com/bi/?perspective=dashboard&amp;pathRef=.my_folders%2FNew%2Bdashboard111&amp;closeWindowOnLastView=true&amp;ui_appbar=false&amp;ui_navbar=false&amp;shareMode=embedded&amp;action=view&amp;mode=dashboard&amp;subView=model00000195a866de93_00000008" width="320" height="200" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen=""></iframe>  <button class="main-btn" onclick="goBackDashboard()">Back</button>
+</div>
+
+<div id="editPage" class="container">
+  <h1>Edit Your Details</h1>
+  <div class="card">
+    <p>Edit feature coming soon!</p>
+  </div>
+  <button class="main-btn" onclick="goBackDashboard()">Back</button>
+</div>
+<div id="reportAnalysis" class="container">
+  <h1>Report Analysis</h1>
+  <div class="card">
+    <h2><strong>Overview</strong></h2>
+    <p>This page provides an in-depth overview of how data is collected, processed, and analyzed.</p>
+    <h3><strong>Data Sources:</strong></h3>
+    <ul>
+      <li>E-commerce transactions</li>
+      <li>Cart abandonment records</li>
+      <li>User behavior</li>
+      <li>Promotional campaigns</li>
+      <li>Checkout metrics</li>
+    </ul>
+    <h3><strong>Data Handling:</strong></h3>
+    <p>Data is stored in structured formats (CSV, Excel, SQL) and processed inside IBM Cognos Analytics using data modules.</p>
+    <h3><strong>Technologies Used:</strong></h3>
+    <ul>
+      <li>IBM Cognos Analytics (for BI and dashboards)</li>
+      <li>HTML, CSS, JavaScript (for optional web integration)</li>
+    </ul>
+    <h3><strong>Dashboard Highlights:</strong></h3>
+    <p>Monitor session durations, checkout success, cart recovery, promo impact, and regional sales trends through interactive charts and maps.</p>
+  </div>
+  <button class="main-btn" onclick="goBackDashboard()">Back</button>
+</div>
+
+<script>
+  let currentRole = '';
+
+  function showPage(pageId) {
+    const pages = document.querySelectorAll('.container');
+    pages.forEach(p => p.classList.remove('active'));
+    document.getElementById(pageId).classList.add('active');
+  }
+
+  function login() {
+    const username = document.getElementById('username').value.trim();
+    const password = document.getElementById('password').value.trim();
+    const role = document.getElementById('role').value;
+
+    if (role === 'user' && username === 'user123' && password === 'userpass') {
+      currentRole = 'user';
+      showPage('userDashboard');
+    } else if (role === 'admin' && username === 'admin123' && password === 'adminpass') {
+      currentRole = 'admin';
+      showPage('adminDashboard');
+    } else {
+      alert('Invalid login details!');
     }
+  }
 
-    document.getElementById("password").addEventListener("input", function () {
-      const val = this.value;
-      const bar = document.getElementById("strengthBar");
-      let strength = 0;
-      if (val.length > 5) strength += 25;
-      if (/[A-Z]/.test(val)) strength += 25;
-      if (/[0-9]/.test(val)) strength += 25;
-      if (/[\W]/.test(val)) strength += 25;
-      bar.style.width = strength + "%";
-      bar.style.background = strength < 50 ? "red" : strength < 75 ? "orange" : "limegreen";
-    });
+  function logout() {
+    currentRole = '';
+    showPage('loginPage');
+  }
 
-    function login() {
-      const user = document.getElementById("username").value.trim();
-      const pass = document.getElementById("password").value;
-      if (user === "" || pass === "") {
-        alert("Please fill in both fields!");
-        return;
-      }
-      document.getElementById("loginBox").style.display = "none";
-      document.getElementById("dashboardBox").style.display = "flex";
+  function goBackDashboard() {
+    if (currentRole === 'user') {
+      showPage('userDashboard');
+    } else if (currentRole === 'admin') {
+      showPage('adminDashboard');
+    } else {
+      showPage('loginPage');
     }
+  }
+</script>
 
-    function logout() {
-      document.getElementById("dashboardBox").style.display = "none";
-      document.getElementById("loginBox").style.display = "block";
-      document.getElementById("username").value = "";
-      document.getElementById("password").value = "";
-      document.getElementById("strengthBar").style.width = "0%";
-    }
-  </script>
 </body>
 </html>
